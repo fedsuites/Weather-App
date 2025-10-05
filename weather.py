@@ -24,9 +24,7 @@ def fetch_weather(location):
         print(Fore.RED + "Unable to fetch weather, check your internet connection")
         #print(f"Debug info: {error}")
         return None
-
-
-
+        
 def parse_weather(data):
     #Extract useful fields from OpenWeather JSON.
     if not data or int(data.get("cod"))!=200:  
@@ -48,7 +46,6 @@ def parse_weather(data):
 
 def display_weather(weather):
     #Display formatted weather data with colors and grouped layout
-    
     print(Fore.CYAN + Style.BRIGHT + "\n" + "=" * 45)
     print(Fore.YELLOW + Style.BRIGHT + f"📍 {weather['city']}, {weather['country']}")
     print(Fore.CYAN + "=" * 45)
@@ -111,7 +108,7 @@ def get_city():
 
             ask_save = input(Fore.CYAN + "Do you want to save this location? (yes(y)/no(n)): ").lower().strip()
             if ask_save in ("yes", "y"):
-                save_locations(location)    
+                save_locations(location) 
         else:
             print(Fore.RED + Style.BRIGHT + "❌ Location not found. Please try again.")
 
