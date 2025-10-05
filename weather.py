@@ -28,7 +28,7 @@ def fetch_weather(location):
 
 
 def parse_weather(data):
-    """Extract useful fields from OpenWeather JSON."""
+    #Extract useful fields from OpenWeather JSON.
     if not data or int(data.get("cod"))!=200:  
         return None
     
@@ -47,7 +47,7 @@ def parse_weather(data):
     }
 
 def display_weather(weather):
-    """Display formatted weather data with colors and grouped layout."""
+    #Display formatted weather data with colors and grouped layout
     
     print(Fore.CYAN + Style.BRIGHT + "\n" + "=" * 45)
     print(Fore.YELLOW + Style.BRIGHT + f"📍 {weather['city']}, {weather['country']}")
@@ -58,12 +58,13 @@ def display_weather(weather):
 {Fore.MAGENTA}🔻 Min: {weather['temp_min']:.1f}°C | 🔺 Max: {weather['temp_max']:.1f}°C
 {Fore.BLUE}💧 Humidity: {weather['humidity']}%
 {Fore.GREEN}🌥️ Condition: {weather['condition']}
-{Fore.CYAN}💨 Wind: {weather['wind_speed']} m/s
+{Fore.CYAN}💨 Wind-Speed: {weather['wind_speed']} m/s
 {Fore.YELLOW}🌅 Sunrise: {weather['sunrise']}
 {Fore.LIGHTBLACK_EX}🌇 Sunset: {weather['sunset']}
 """)
-
     print(Fore.CYAN + "=" * 45 + "\n")
+    
+#loads saved locations from csv.
 def load_locations():
     global locations
     locations=[]
@@ -76,6 +77,7 @@ def load_locations():
         pass
     return locations
 
+#write/save searched locations into csv
 def save_locations(location):
      for row in load_locations():
         if row["Locations"]== location:
@@ -117,8 +119,6 @@ def get_city():
         if more not in ("yes", "y"):
             print(Fore.YELLOW + "\n👋 Goodbye! Thanks for using the Weather App.\n")
             break
-
-
 
 if __name__=="__main__":
     main()

@@ -1,7 +1,21 @@
-
-.env
+# Python cache and build files
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.env
+venv/
+
+# VS Code settings
 .vscode/
-.wake/
-weather.csv
+
+# Data files
+*.csv
+
+# OS files
+.DS_Store
+Thumbs.db
+
+
