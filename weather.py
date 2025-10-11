@@ -3,6 +3,7 @@ import os
 import requests
 from datetime import datetime
 import csv
+import time
 from colorama import Fore,Style, init
 init(autoreset=True)
 
@@ -60,7 +61,7 @@ def display_weather(weather):
 {Fore.LIGHTBLACK_EX}🌇 Sunset: {weather['sunset']}
 """)
     print(Fore.CYAN + "=" * 45 + "\n")
-    
+
 #loads saved locations from csv.
 def load_locations():
     global locations
@@ -81,12 +82,13 @@ def save_locations(location):
             print("You already saved this location. Try searching for another one instead.")
             return
      else:
-            print(Fore.GREEN + "✅ Location saved successfully!")         
-     with open(filename,"a",newline="") as file:
-                writer= csv.DictWriter(file,fieldnames=["Locations"])
-                if file.tell()==0:
-                    writer.writeheader()
-                writer.writerow({f"Locations": location})
+
+        with open(filename,"a",newline="") as file:
+            writer= csv.DictWriter(file,fieldnames=["Locations"])
+            if file.tell()==0:
+                writer.writeheader()
+            writer.writerow({f"Locations": location})
+            print(Fore.GREEN + "✅ Location saved successfully!")  
      locations.append(location)
 
 def get_city():
@@ -109,6 +111,14 @@ def get_city():
             ask_save = input(Fore.CYAN + "Do you want to save this location? (yes(y)/no(n)): ").lower().strip()
             if ask_save in ("yes", "y"):
                 save_locations(location) 
+
+                print("Saving location to csv", end="")
+                for _ in range(4):
+                    time.sleep(0.6)
+                    print(".",end="")
+                print()
+                save_locations(location)              
+
         else:
             print(Fore.RED + Style.BRIGHT + "❌ Location not found. Please try again.")
 
