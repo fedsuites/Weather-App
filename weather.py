@@ -28,7 +28,8 @@ def fetch_weather(location):
         
 def parse_weather(data):
     #Extract useful fields from OpenWeather JSON.
-    if not data or int(data.get("cod"))!=200:  
+    if not data or str(data.get("cod"))!="200":  
+        print("Location not found, please try again")
         return None
     
     return {
@@ -77,19 +78,18 @@ def load_locations():
 
 #write/save searched locations into csv
 def save_locations(location):
-     for row in load_locations():
+    for row in load_locations():
         if row["Locations"]== location:
             print("You already saved this location. Try searching for another one instead.")
             return
-     else:
-
+    else:
         with open(filename,"a",newline="") as file:
             writer= csv.DictWriter(file,fieldnames=["Locations"])
             if file.tell()==0:
                 writer.writeheader()
             writer.writerow({f"Locations": location})
             print(Fore.GREEN + "✅ Location saved successfully!")  
-     locations.append(location)
+    locations.append(location)
 
 def get_city():
     while True:
@@ -110,22 +110,25 @@ def get_city():
 
             ask_save = input(Fore.CYAN + "Do you want to save this location? (yes(y)/no(n)): ").lower().strip()
             if ask_save in ("yes", "y"):
-                save_locations(location) 
-
                 print("Saving location to csv", end="")
                 for _ in range(4):
                     time.sleep(0.6)
                     print(".",end="")
                 print()
                 save_locations(location)              
-
         else:
             print(Fore.RED + Style.BRIGHT + "❌ Location not found. Please try again.")
-
+        
+        
         more = input(Fore.CYAN + "\nCheck another location? (yes(y)/no(n)): ").lower().strip()
         if more not in ("yes", "y"):
             print(Fore.YELLOW + "\n👋 Goodbye! Thanks for using the Weather App.\n")
             break
+    return location    
+        
+        
+        
+       
 
 if __name__=="__main__":
     main()
